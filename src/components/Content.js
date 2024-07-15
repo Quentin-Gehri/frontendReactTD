@@ -1,13 +1,11 @@
-// frontend/src/components/Content.js
-
 import React from 'react';
-import DataList from './DataList'; // Importez le composant DataList
+import DataList from './DataList';
 
-function Content() {
+function Content({ onOpenUpdateRepairModal }) {
   return (
     <main className="App-content">
       <h2>Réparations</h2>
-      <DataList /> 
+      <DataList onOpenUpdateRepairModal={onOpenUpdateRepairModal} />
     </main>
   );
 }
