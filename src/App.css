@@ -22,9 +22,12 @@ header {
 }
 
 /* Main content area styling */
-.App-content {
+main {
+    flex: 1; /* Remplace flex-grow: 1 pour simplifier */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Ajout du défilement lorsque nécessaire */
     padding: 20px;
-    overflow-y: auto;
 }
 
 /* Repair list container styling */
@@ -62,9 +65,9 @@ footer {
     color: white;
     text-align: center;
     padding: 10px 0;
-    position: fixed;
+    /* Position sticky ensures footer sticks to the bottom */
+    position: relative;
     bottom: 0;
-    left: 0;
     width: 100%;
 }
 

@@ -57,7 +57,7 @@ const UpdateRepairModal = ({ repairId, onClose }) => {
 
           <label htmlFor="statut">Statut:</label>
           <select id="statut" name="statut" defaultValue={reparation.statut}>
-            <option value="en_attente">A Faire</option>
+            <option value="a_faire">À faire</option>
             <option value="en_cours">En cours</option>
             <option value="termine">Terminé</option>
           </select>
