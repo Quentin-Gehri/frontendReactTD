@@ -1,33 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import UpdateRepairModal from './UpdateRepairModal'; 
+import Filtre from './Filtre'; 
+import UpdateRepairModal from './UpdateRepairModal';
 
 const DataList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedRepairId, setSelectedRepairId] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
-    axios.get('http://localhost:5000/api/reparations')
-      .then(response => {
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        if (error.response) {
-          console.error('Error response from server:', error.response);
-          setError('Error response from server');
-        } else if (error.request) {
-          console.error('No response received:', error.request);
-          setError('No response received');
-        } else {
-          console.error('Error setting up the request:', error.message);
-          setError('Error setting up the request');
-        }
-        setLoading(false);
-      });
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/reparations');
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Erreur lors du chargement des réparations:', error);
+      setError('Erreur lors du chargement des réparations');
+      setLoading(false);
+    }
+  };
 
   const handleOpenModal = (reparationId) => {
     setSelectedRepairId(reparationId);
@@ -37,6 +34,11 @@ const DataList = () => {
   const handleCloseModal = () => {
     setSelectedRepairId(null);
     setIsModalOpen(false);
+    fetchData(); 
+  };
+
+  const handleFilterData = (filteredData) => {
+    setData(filteredData);
   };
 
   if (loading) {
@@ -44,23 +46,25 @@ const DataList = () => {
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>Erreur: {error}</div>;
   }
 
   return (
     <div className="repair-list-container">
+<h2>Réparations: {data.length > 0 ? data[0].reparation_statut ? data[0].reparation_statut : 'Toutes' : 'Aucune réparation'}</h2>
+      <Filtre setData={handleFilterData} />
       <ul className="repair-list">
         {data.map(item => (
-          <li key={item.reparation_id}>
+          <li key={item.reparation_id}>  
             <h3>Client: {item.client_nom} // {item.client_email}</h3>
-            <p>Appareil: { item.reparation_appareil }</p>
-            <p>Description: { item.reparation_description }</p>
+            <p>Appareil: {item.reparation_appareil}</p>
+            <p>Description: {item.reparation_description}</p>
             <p>Date de dépôt: {new Date(item.reparation_date_depot).toLocaleDateString('fr-FR', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
             })}</p>
-            <p>Statut: { item.reparation_statut }</p>
+            <p>Statut: {item.reparation_statut}</p>
             <button onClick={() => handleOpenModal(item.reparation_id)}>Modifier</button>
           </li>
         ))}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const UpdateRepairModal = ({ repairId, onClose }) => {
+function UpdateRepairModal ({ repairId, onClose }) {
   const [reparation, setReparation] = useState({
     reparation_appareil: '',
     reparation_description: '',
