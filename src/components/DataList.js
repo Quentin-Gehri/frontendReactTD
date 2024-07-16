@@ -9,7 +9,7 @@ const DataList = () => {
   const [selectedRepairId, setSelectedRepairId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/data')
+    axios.get('http://localhost:5000/api/reparations')
       .then(response => {
         setData(response.data);
         setLoading(false);

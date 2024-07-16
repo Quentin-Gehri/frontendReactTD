@@ -14,7 +14,7 @@ function AddRepairModal({ onClose, onSuccess }) {
 
   const fetchClients = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/fetchClients');
+      const response = await axios.get('http://localhost:5000/api/clients');
       setClients(response.data);
     } catch (error) {
       console.error('Error fetching clients:', error);
@@ -23,11 +23,12 @@ function AddRepairModal({ onClose, onSuccess }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:5000/api/reparations', { idClient, appareil, description })
+    axios.post('http://localhost:5000/api/addReparations', { idClient, appareil, description })
       .then(response => {
         console.log('Réparation ajoutée avec succès:', response.data);
         onSuccess('Réparation ajoutée avec succès');
         onClose(); 
+        window.location.reload();
       })
       .catch(error => {
         console.error('Erreur lors de l\'ajout de la réparation:', error.response);

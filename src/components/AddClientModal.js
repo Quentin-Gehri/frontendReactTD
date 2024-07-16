@@ -8,7 +8,7 @@ function AddClientModal({ onClose, onSuccess }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:5000/api/clients', { nom, email })
+    axios.post('http://localhost:5000/api/addClients', { nom, email })
       .then(response => {
         console.log('Client ajouté avec succès:', response.data);
         onSuccess('Client ajouté avec succès');
