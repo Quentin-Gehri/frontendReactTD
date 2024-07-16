@@ -12,6 +12,7 @@ const App = () => {
   const [isAddRepairModalOpen, setIsAddRepairModalOpen] = useState(false);
   const [isAddClientModalOpen, setIsAddClientModalOpen] = useState(false);
   const [selectedRepairId, setSelectedRepairId] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const openAddRepairModal = () => {
     setIsAddRepairModalOpen(true);
@@ -37,25 +38,39 @@ const App = () => {
     setSelectedRepairId(null);
   };
 
+  const handleSuccessMessage = (message) => {
+    setSuccessMessage(message);
+    setTimeout(() => {
+      setSuccessMessage('');
+    }, 5000); 
+  };
+
   return (
     <div className="App">
       <Helmet>
-        <meta charset="UTF-8" />
+        <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Liste des Réparations - Réparateur Expert</title>
       </Helmet>
       <Header
         onOpenAddClientModal={openAddClientModal}
         onOpenAddRepairModal={openAddRepairModal}
+        successMessage={successMessage}
       />
       <Content
         onOpenUpdateRepairModal={handleOpenUpdateModal}
       />
       {isAddRepairModalOpen && (
-        <AddRepairModal onClose={closeAddRepairModal} />
+        <AddRepairModal
+          onClose={closeAddRepairModal}
+          onSuccess={handleSuccessMessage}
+        />
       )}
       {isAddClientModalOpen && (
-        <AddClientModal onClose={closeAddClientModal} />
+        <AddClientModal 
+          onClose={closeAddClientModal}
+          onSuccess={handleSuccessMessage}
+        />
       )}
       {selectedRepairId !== null && (
         <UpdateRepairModal

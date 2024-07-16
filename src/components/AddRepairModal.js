@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function AddRepairModal({ onClose }) {
+function AddRepairModal({ onClose, onSuccess }) {
   const [clients, setClients] = useState([]);
   const [idClient, setIdClient] = useState('');
   const [appareil, setAppareil] = useState('');
@@ -26,7 +26,8 @@ function AddRepairModal({ onClose }) {
     axios.post('http://localhost:5000/api/reparations', { idClient, appareil, description })
       .then(response => {
         console.log('Réparation ajoutée avec succès:', response.data);
-        onClose(); // Fermer le modal après l'ajout réussi
+        onSuccess('Réparation ajoutée avec succès');
+        onClose(); 
       })
       .catch(error => {
         console.error('Erreur lors de l\'ajout de la réparation:', error.response);
@@ -73,8 +74,7 @@ function AddRepairModal({ onClose }) {
               name="idClient"
               value={idClient}
               onChange={(e) => setIdClient(e.target.value)}
-              required
-            >
+              required>
               <option value="">Sélectionner un client</option>
               {clients.map(client => (
                 <option key={client.client_id} value={client.client_id}>

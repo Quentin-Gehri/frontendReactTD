@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function AddClientModal({ onClose }) {
+function AddClientModal({ onClose, onSuccess }) {
   const [nom, setNom] = useState('');
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -11,6 +11,7 @@ function AddClientModal({ onClose }) {
     axios.post('http://localhost:5000/api/clients', { nom, email })
       .then(response => {
         console.log('Client ajouté avec succès:', response.data);
+        onSuccess('Client ajouté avec succès');
         onClose(); 
       })
       .catch(error => {
