@@ -23,6 +23,7 @@ const Filtre = ({ setData }) => {
           <option value="À faire">À faire</option>
           <option value="En cours">En cours</option>
           <option value="Terminé">Terminé</option>
+          <option value="Repris par le client">Repris par le client</option>
         </select>
         <button type="submit">Filtrer</button>
       </form>

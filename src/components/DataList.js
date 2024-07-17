@@ -9,7 +9,8 @@ const DataList = () => {
   const [error, setError] = useState(null);
   const [selectedRepairId, setSelectedRepairId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [repairStatus, setRepairStatus] = useState('Toutes');
+  const [isFiltered, setIsFiltered] = useState(false); 
   useEffect(() => {
     fetchData();
   }, []);
@@ -39,6 +40,12 @@ const DataList = () => {
 
   const handleFilterData = (filteredData) => {
     setData(filteredData);
+    setIsFiltered(true);
+    if (filteredData.length > 0 && filteredData[0].reparation_statut) {
+      setRepairStatus(filteredData[0].reparation_statut);
+    } else {
+      setRepairStatus('Aucune réparation trouvée');
+    }
   };
 
   if (loading) {
@@ -51,7 +58,7 @@ const DataList = () => {
 
   return (
     <div className="repair-list-container">
-<h2>Réparations: {data.length > 0 ? data[0].reparation_statut ? data[0].reparation_statut : 'Toutes' : 'Aucune réparation'}</h2>
+      <h2>Réparations: {isFiltered ? repairStatus : 'Toutes'}</h2>
       <Filtre setData={handleFilterData} />
       <ul className="repair-list">
         {data.map(item => (

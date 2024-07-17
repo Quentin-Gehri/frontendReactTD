@@ -102,8 +102,8 @@ function UpdateRepairModal ({ repairId, onClose }) {
             <option value="À faire">À faire</option>
             <option value="En cours">En cours</option>
             <option value="Terminé">Terminé</option>
-          </select>
-
+          <option value="Repris par le client">Repris par le client</option>
+        </select>
           <button type="submit">Enregistrer</button>
         </form>
       </div>
